@@ -1,6 +1,8 @@
 import yfinance as yf
+import pandas as pd  # <-- This should already be there, but make sure it's in your script!
 import datetime
 from datetime import datetime, timedelta
+
 
 one_year_ago = datetime.today() - timedelta(days=365)
 formatted_date = one_year_ago.strftime("%Y-%m-%d")
@@ -32,11 +34,16 @@ def filter_stocks(data, min_volatility=0.02, min_avg_volume=500000):
         # Average daily volume
         avg_volume = stock_data['Volume'].mean()  # This should be a scalar
         
+        # Ensure `avg_volume` is a scalar
+        avg_volume = avg_volume.item() if isinstance(avg_volume, pd.Series) else avg_volume
+        
         # If the stock meets criteria, add it to the selection
         if volatility > min_volatility and avg_volume > min_avg_volume:
             selected_stocks.append(ticker)
     
     return selected_stocks
+
+
 
 tickers = ['AAPL', 'TSLA', 'GOOGL', 'AMZN', 'MSFT']
 stock_data = fetch_data(tickers)
