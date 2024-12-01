@@ -27,10 +27,10 @@ def filter_stocks(data, min_volatility=0.02, min_avg_volume=500000):
         stock_data['Daily_Return'] = stock_data['Adj Close'].pct_change()
         
         # Calculate volatility (standard deviation of daily returns)
-        volatility = stock_data['Daily_Return'].std()
+        volatility = stock_data['Daily_Return'].std()  # This should be a scalar
         
         # Average daily volume
-        avg_volume = stock_data['Volume'].mean()
+        avg_volume = stock_data['Volume'].mean()  # This should be a scalar
         
         # If the stock meets criteria, add it to the selection
         if volatility > min_volatility and avg_volume > min_avg_volume:
